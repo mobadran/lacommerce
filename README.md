@@ -30,7 +30,7 @@ LaCommerce is a monolithic Laravel application designed as a demonstration of a 
 
 ```bash
 # 1. Clone the repository
-git clone <your-repo-url> laravel-ecommerce
+git clone https://github.com/mobadran/lacommerce laravel-ecommerce
 cd laravel-ecommerce
 
 # 2. Install PHP dependencies
@@ -62,6 +62,9 @@ After registering an account, you can promote it via Artisan Tinker:
 php artisan tinker
 >>> \App\Models\User::where('email', 'you@example.com')->update(['is_admin' => true]);
 ```
+
+- Then go to [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) to access the admin panel.
+- From there you can manage admins instead of using artisan tinker again.
 
 ---
 
@@ -164,11 +167,9 @@ laravel-ecommerce/
 
 ## 💭 Reflection
 
-Building LaCommerce was an exercise in applying the full Laravel MVC stack without relying on pre-built scaffolding like Breeze or Jetstream. Doing authentication from scratch — manually hashing passwords, using `Auth::attempt()`, and protecting routes with custom middleware — reinforced how these systems work under the hood rather than treating them as a black box.
+Building LaCommerce was an exercise in applying the full Laravel MVC stack without relying on pre-built scaffolding like Breeze or Jetstream. Doing authentication from scratch — manually hashing passwords and protecting routes with custom middleware — reinforced how these systems work under the hood rather than treating them as a black box.
 
 The session-based cart was a deliberate choice over a database-backed cart to keep the system lightweight for guest shoppers. The trade-off is that cart contents don't persist across devices or sessions, which is an acceptable limitation for this scope.
-
-Using `DB::transaction()` in the checkout flow was an important design decision. Without it, a server error mid-way through saving order items could leave an `Order` record with no items — a subtle but serious data integrity bug. Wrapping it in a transaction ensures atomicity.
 
 The admin panel grew organically feature by feature — products, then orders, then user/role management — which mirrors how real admin tools often evolve. One area that would benefit from further development is **input sanitisation and security hardening**: currently there is no CSRF-beyond-form protection, no rate limiting on the auth routes, and no email verification step for new accounts — all standard additions for a production system.
 
