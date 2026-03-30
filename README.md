@@ -1,59 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# LaCommerce
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📋 Description
 
-## About Laravel
+LaCommerce is a monolithic Laravel application designed as a demonstration of a complete e-commerce workflow. Customers can browse products, add them to a cart, and complete a checkout. Admins can manage inventory, track orders, and control user roles — all from a dedicated admin panel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Key features:**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Product catalogue with individual product pages
+- Session-based shopping cart (add, update quantity, remove)
+- Checkout with Cash on Delivery (COD) — order saved to database, stock decremented
+- User authentication (register, login, logout) built from scratch — no starter kit
+- Role-based access: `is_admin` flag gates the admin panel via middleware
+- Admin panel: manage products (with image upload), view/update orders, promote users to admin, and revoke admin rights
+- Responsive design with a mobile hamburger menu
+- About Us and Contact Us static pages
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ⚙️ Setup Steps
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Prerequisites
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP >= 8.2
+- Composer
+- Node.js & npm
+- MySQL/MariaDB database
 
-## Laravel Sponsors
+### Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+# 1. Clone the repository
+git clone <your-repo-url> laravel-ecommerce
+cd laravel-ecommerce
 
-### Premium Partners
+# 2. Install PHP dependencies
+composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# 3. Install Node dependencies
+npm install
 
-## Contributing
+# 4. Copy the environment file and generate an app key
+cp .env.example .env
+php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 5. Run database migrations and seed sample products
+php artisan migrate --seed
 
-## Code of Conduct
+# 6. Link the storage disk (for uploaded product images)
+php artisan storage:link
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 7. Start the development servers (two terminals)
+php artisan serve       # Laravel backend  →  http://127.0.0.1:8000
+npm run dev             # Vite / Tailwind  →  watches assets
+```
 
-## Security Vulnerabilities
+### Making yourself an Admin
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+After registering an account, you can promote it via Artisan Tinker:
 
-## License
+```bash
+php artisan tinker
+>>> \App\Models\User::where('email', 'you@example.com')->update(['is_admin' => true]);
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🗂️ Folder Structure
+
+```
+laravel-ecommerce/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/                  # Admin-only controllers
+│   │   │   │   ├── AdminController.php
+│   │   │   │   ├── OrderController.php
+│   │   │   │   ├── ProductController.php
+│   │   │   │   └── UserController.php
+│   │   │   ├── AccountController.php   # Customer account management
+│   │   │   ├── AuthController.php      # Register / Login / Logout
+│   │   │   ├── CartController.php      # Session-based cart
+│   │   │   ├── CheckoutController.php  # COD checkout & order creation
+│   │   │   └── ProductController.php   # Public product listing/detail
+│   │   └── Middleware/
+│   │       └── IsAdmin.php             # Blocks non-admins from /admin/*
+│   ├── Models/
+│   │   ├── Order.php
+│   │   ├── OrderItem.php
+│   │   ├── Product.php
+│   │   └── User.php
+│   └── Providers/
+│       └── AppServiceProvider.php
+├── database/
+│   ├── factories/
+│   │   ├── ProductFactory.php
+│   │   └── UserFactory.php
+│   ├── migrations/                     # All table definitions
+│   └── seeders/
+│       ├── DatabaseSeeder.php
+│       └── ProductSeeder.php
+├── public/
+│   └── storage/                        # Symlink → storage/app/public
+├── resources/
+│   ├── css/app.css                     # Tailwind entry point
+│   ├── js/app.js
+│   └── views/
+│       ├── account/edit.blade.php      # Customer profile page
+│       ├── admin/
+│       │   ├── admins/index.blade.php  # Revoke admin rights
+│       │   ├── layouts/app.blade.php   # Admin sidebar layout
+│       │   ├── orders/                 # Order list + detail
+│       │   ├── products/               # Product CRUD
+│       │   └── users/index.blade.php   # Promote users to admin
+│       ├── auth/
+│       │   ├── login.blade.php
+│       │   └── register.blade.php
+│       ├── cart/index.blade.php
+│       ├── checkout/
+│       │   ├── index.blade.php
+│       │   └── success.blade.php
+│       ├── layouts/
+│       │   ├── header.blade.php        # Sticky nav + mobile menu
+│       │   ├── footer.blade.php
+│       │   └── master.blade.php        # Global page layout
+│       ├── products/
+│       │   ├── index.blade.php         # Product grid
+│       │   └── show.blade.php          # Single product detail
+│       ├── about.blade.php
+│       ├── contact.blade.php
+│       └── home.blade.php
+├── routes/
+│   └── web.php                         # All application routes
+├── storage/app/public/products/        # Uploaded product images
+├── .env
+├── composer.json
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## 📄 Main Files Explanation
+
+| File                                               | Purpose                                                                                                            |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `routes/web.php`                                   | Registers all routes — public store, auth, cart, checkout, and admin group (protected by `IsAdmin` middleware)     |
+| `app/Http/Middleware/IsAdmin.php`                  | Checks `Auth::user()->is_admin`; redirects non-admins away from `/admin/*`                                         |
+| `app/Http/Controllers/AuthController.php`          | Handles registration (with hashed password), login via `Auth::attempt()`, and session-safe logout                  |
+| `app/Http/Controllers/CartController.php`          | Stores cart items in the session keyed by product ID; supports add, update quantity, and remove                    |
+| `app/Http/Controllers/CheckoutController.php`      | Validates shipping form, wraps order+items creation in a DB transaction, decrements product stock, clears cart     |
+| `app/Http/Controllers/Admin/ProductController.php` | Full CRUD for products; handles image uploads to `storage/app/public/products/` via Laravel's filesystem           |
+| `app/Http/Controllers/Admin/OrderController.php`   | Lists all orders; shows order detail with items; allows status updates (pending → shipped → delivered → cancelled) |
+| `app/Http/Controllers/Admin/UserController.php`    | Promotes a standard user to admin (`is_admin = true`)                                                              |
+| `app/Http/Controllers/Admin/AdminController.php`   | Demotes an admin back to standard user; prevents self-demotion                                                     |
+| `app/Models/Order.php`                             | Eloquent model with `hasMany(OrderItem::class)` relationship                                                       |
+| `app/Models/OrderItem.php`                         | Belongs to both `Order` and `Product`; stores price snapshot at time of purchase                                   |
+| `resources/views/layouts/master.blade.php`         | Base layout — includes header, footer, and `@yield('content')` slot                                                |
+| `resources/views/layouts/header.blade.php`         | Sticky responsive nav; desktop shows full links, mobile uses hamburger drawer with auth & admin links              |
+| `resources/views/admin/layouts/app.blade.php`      | Admin sidebar layout with active-state highlighting for Products, Orders, Users, Admins                            |
+| `database/seeders/ProductSeeder.php`               | Seeds sample products with titles, descriptions, prices, and stock for development                                 |
+
+---
+
+## 💭 Reflection
+
+Building LaCommerce was an exercise in applying the full Laravel MVC stack without relying on pre-built scaffolding like Breeze or Jetstream. Doing authentication from scratch — manually hashing passwords, using `Auth::attempt()`, and protecting routes with custom middleware — reinforced how these systems work under the hood rather than treating them as a black box.
+
+The session-based cart was a deliberate choice over a database-backed cart to keep the system lightweight for guest shoppers. The trade-off is that cart contents don't persist across devices or sessions, which is an acceptable limitation for this scope.
+
+Using `DB::transaction()` in the checkout flow was an important design decision. Without it, a server error mid-way through saving order items could leave an `Order` record with no items — a subtle but serious data integrity bug. Wrapping it in a transaction ensures atomicity.
+
+The admin panel grew organically feature by feature — products, then orders, then user/role management — which mirrors how real admin tools often evolve. One area that would benefit from further development is **input sanitisation and security hardening**: currently there is no CSRF-beyond-form protection, no rate limiting on the auth routes, and no email verification step for new accounts — all standard additions for a production system.
+
+Overall, the project demonstrates a solid foundation for a production-ready e-commerce platform and provides clear extension points for features like order email notifications, product categories, search, and payment gateway integration.

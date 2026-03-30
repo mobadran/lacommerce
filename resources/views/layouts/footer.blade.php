@@ -13,27 +13,11 @@
 
             <!-- Quick Links -->
             <div>
-                <h4 class="font-semibold text-gray-900 mb-6 uppercase text-xs tracking-widest">Shop</h4>
+                <h4 class="font-semibold text-gray-900 mb-6 uppercase text-xs tracking-widest">Shop & Discover</h4>
                 <ul class="space-y-4">
-                    <li><a href="/products" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">All
-                            Products</a></li>
-                    <li><a href="/new-arrivals" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">New
-                            Arrivals</a></li>
-                    <li><a href="/best-sellers" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Best
-                            Sellers</a></li>
-                </ul>
-            </div>
-
-            <!-- Support -->
-            <div>
-                <h4 class="font-semibold text-gray-900 mb-6 uppercase text-xs tracking-widest">Support</h4>
-                <ul class="space-y-4">
-                    <li><a href="/faq" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Help &
-                            FAQ</a></li>
-                    <li><a href="/shipping" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Shipping
-                            Info</a></li>
-                    <li><a href="/returns"
-                            class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Returns</a></li>
+                    <li><a href="{{ route('products.index') }}" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">All Products</a></li>
+                    <li><a href="{{ route('about') }}" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Our Story</a></li>
+                    <li><a href="{{ route('contact') }}" class="text-sm text-gray-500 hover:text-blue-600 transition-colors">Contact Us</a></li>
                 </ul>
             </div>
 
@@ -51,21 +35,10 @@
             </div>
         </div>
 
-        <div class="border-t border-gray-50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="border-t border-gray-50 pt-8 md:flex-row items-center justify-between gap-4">
             <p class="text-gray-400 text-xs text-center">
                 Copyright &copy; {{ date('Y') }} LaCommerce. All rights reserved.
             </p>
-            <div class="flex items-center space-x-6">
-                <a href="#" class="text-gray-400 hover:text-gray-900 transition-colors">
-                    <span class="sr-only">Twitter</span>
-                    <!-- Simple SVG icon placeholder or text -->
-                    <span class="text-[10px] uppercase font-bold tracking-tighter">Twitter</span>
-                </a>
-                <a href="#" class="text-gray-400 hover:text-gray-900 transition-colors">
-                    <span class="sr-only">Instagram</span>
-                    <span class="text-[10px] uppercase font-bold tracking-tighter">Instragram</span>
-                </a>
-            </div>
         </div>
     </div>
 </footer>
