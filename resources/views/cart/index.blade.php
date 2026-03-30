@@ -121,7 +121,7 @@
                 <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
             </div>
             <h2 class="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
-            <p class="text-gray-500 mb-8 max-w-sm mx-auto">Looks like you haven't added anything to your cart yet. Let's find you something special.</p>
+            <p class="text-gray-500 mb-8 max-w-sm mx-auto px-4">Looks like you haven't added anything to your cart yet. Let's find you something special.</p>
             <a href="/products" class="inline-block bg-gray-900 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-800 transition-all shadow-lg">
                 Continue Shopping
             </a>

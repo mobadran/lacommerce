@@ -32,9 +32,9 @@
         </div>
     </div>
 
-    <div class="bg-gray-900 p-12 md:p-20 text-center relative overflow-hidden shadow-2xl rounded-2xl">
+    <div class="bg-gray-900 p-10 md:p-20 text-center relative overflow-hidden shadow-2xl rounded-2xl">
         <div class="absolute top-0 left-0 w-full h-full bg-linear-to-b from-white/5 to-transparent"></div>
-        <div class="relative z-10 p-6">
+        <div class="relative z-10 md:p-6">
             <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to elevate your space?</h3>
             <p class="text-gray-400 mb-10 text-lg max-w-xl mx-auto">
                 Explore our carefully curated selection and discover the perfect piece for your modern lifestyle.
