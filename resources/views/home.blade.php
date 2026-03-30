@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <!-- Placeholder for featured products/image -->
+    <!-- Featured products -->
     <h2 class="text-3xl mt-18 font-bold text-gray-900 mb-6">Featured Products</h2>
     <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-8">
         @foreach ($products as $product)
